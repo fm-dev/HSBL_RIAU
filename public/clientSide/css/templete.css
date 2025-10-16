@@ -2665,6 +2665,7 @@ h1, h2, h3, h4, h5, h6 {
 textarea.form-control {
 	height: auto;
 }
+
 .input-group-text {
     background-color: transparent;
     border-radius: 0px;

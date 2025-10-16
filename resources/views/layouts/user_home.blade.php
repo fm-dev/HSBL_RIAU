@@ -42,7 +42,6 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('clientSide/') }}plugins/revolution/revolution/css/settings.css">
 	<!-- Revolution Navigation Style -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('clientSide/') }}plugins/revolution/revolution/css/navigation.css">
-		
 </head>
 <body id="bg">
 <div class="page-wraper">
@@ -164,7 +163,7 @@
 								<!-- SLIDE -->
 								<li data-index="rs-100" data-transition="parallaxvertical" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="default"  data-thumb="images/main-slider/slide1.jpg"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="A STUDY ON HAPPINESS" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="">
 									<!-- MAIN IMAGE -->
-									<img src="{{ asset('clientSide/images/main-slider/hsblassests/slide1.webp') }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" style="filter: brightness(0.6);" data-no-retina>
+									<img src="{{ asset('clientSide/images/main-slider/hsblassests/slide1.png') }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" style="filter: brightness(0.6);" data-no-retina>
 									<!-- LAYERS -->
 
 									<!-- LAYER NR. 1 -->
@@ -273,7 +272,7 @@
 								<!-- SLIDE 2 -->
 								<li data-index="rs-200" data-transition="parallaxvertical" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="default"  data-thumb="images/main-slider/slide2.jpg"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="A STUDY ON HAPPINESS" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="">
 									<!-- MAIN IMAGE -->
-									<img src="{{ asset('clientSide/images/main-slider/hsblassests/slide2.webp') }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina>
+									<img src="{{ asset('clientSide/images/main-slider/hsblassests/bgjadwalpertandingan.png') }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina>
 									<!-- LAYERS -->
 
 									<!-- LAYER NR. 1 -->
@@ -424,36 +423,28 @@
 							</form>
                         </div>    
 					</div>		
-					<div class="row">
-						<div class="col-lg-5 col-md-5">
-							<div class="team-box-left clearfix">
-								<div class="player pull-right">
-									<img width="192" height="351" src="images/team-1.png" alt="">
+					<div class="row" >
+						<div class="col-lg-12 col-md-12">
+                            <h2 class="h2 text-uppercase text-primary text-center">Final</h2>
+							<p class="text-center">Rabu 11 November 2024</p>
+							<div class="row w-100">
+								<div class="d-flex flex-column flex-md-row flex-xl-row justify-content-center align-items-center gap-5">
+									<div class="col-12 col-md-5 col-lg-5 justify-content-center align-items-center text-center background-with-opacity" style="background-image:url({{ asset('clientSide/images/logoTeam/team1.png') }});">
+										<div class="d-flex flex-column  justify-content-center align-items-center" style="background: rgba(0, 0, 0, 0.4)" >
+											<div class="h4 text-uppercase text-white">SMA 3 MANDAU</div>
+											<div class="score text-white">10</div> <!-- Skor untuk Team 1 -->
+										</div>
+									</div>
+									
+									<h1 class="h2 text-uppercase">VS</h1>
+
+									<div class="col-12 col-md-5 col-lg-5  justify-content-center align-items-center text-center" style="background-image:url({{ asset('clientSide/images/logoTeam/team1.png') }})">
+										<div class="d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 0, 0, 0.4)">
+											<div class="score text-white">3</div> <!-- Skor untuk Team 1 -->
+											<div class="h4 text-uppercase text-white">SMA 3 MANDAU</div>
+										</div>
+									</div>
 								</div>
-								<div class="team-result text-white text-left">
-									<h3 class="text-uppercase font-weight-600 m-a0">England</h3>
-									<div class="m-tb5"><span class="text-green">WIN</span></div>
-									<a href="javascript:void(0);" class="site-button">Score Board</a>
-								</div>		
-							</div>
-						</div>	
-						<div class="col-lg-2 col-md-2 text-center p-lr0">
-							<div class="score-info">
-								<span class="vs">V/S</span>	
-								<span class="score">5-2</span>
-								<p>May 16,2015 15:30pm Wbeysley Stadium (london)</p>
-							</div>	
-						</div>
-						<div class="col-lg-5 col-md-5">
-							<div class="team-box-right clearfix">
-								<div class="player pull-left">
-									<img width="192" height="351" src="images/team-2.png"  alt="">
-								</div>
-								<div class="team-result text-white text-right">
-									<h3 class="text-uppercase font-weight-600 m-a0">England</h3>
-									<div class="m-tb5"><span class="text-red">LOSS</span></div>
-									<a href="javascript:void(0);" class="site-button">Score Board</a>
-								</div>		
 							</div>
 						</div>
 					</div>
@@ -475,7 +466,7 @@
 							<div class="row next-match-team clearfix m-b30">
 								<div class="col-lg-5 col-sm-5 col-4">	
 									<a href="javascript:void(0);" class="pull-right  m-t20">
-										<span class="country"><img width="50" height="50" src="images/flag/flag1.jpg"  alt=""></span>
+										<span class="country"><img width="50" height="50" src="{{ asset('clientSide/images/logoTeam/team1.png') }}"  alt=""></span>
 										<span>England</span>
 									</a>
 								</div>		
@@ -485,7 +476,7 @@
 								<div class="col-lg-5 col-sm-5 col-4">
 									<a href="javascript:void(0);" class="pull-left m-t20">
 										<span>The Africa</span>
-										<span class="country"><img width="50" height="50" src="images/flag/flag2.jpg"  alt=""></span>
+										<span class="country"><img width="50" height="50" src="{{ asset('clientSide/images/logoTeam/team1.png') }}"  alt=""></span>
 									</a>
 								</div>
 							</div>
@@ -516,7 +507,7 @@
 							<div class="row next-match-team clearfix m-b30">
 								<div class="col-lg-5 col-sm-5 col-4">	
 									<a href="javascript:void(0);" class="pull-right  m-t20">
-										<span class="country"><img width="50" height="50" src="images/flag/flag1.jpg" alt=""></span>
+										<span class="country"><img width="50" height="50" src="{{ asset('clientSide/images/logoTeam/team1.png') }}" alt=""></span>
 										<span>England</span>
 									</a>
 								</div>		
@@ -526,7 +517,7 @@
 								<div class="col-lg-5 col-sm-5 col-4">
 									<a href="javascript:void(0);" class="pull-left m-t20">
 										<span>The Africa</span>
-										<span class="country"><img width="50" height="50" src="images/flag/flag2.jpg"  alt=""></span>
+										<span class="country"><img width="50" height="50" src="{{ asset('clientSide/images/logoTeam/team1.png') }}"  alt=""></span>
 									</a>
 								</div>
 							</div>
