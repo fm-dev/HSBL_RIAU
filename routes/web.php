@@ -9,3 +9,7 @@ Route::get('/login', [ClientSideController::class,'login'])->name('login');
 Route::get('/registrasi', [ClientSideController::class,'registrasi'])->name('registrasi');
 Route::post('/registrasi/add/user', [authController::class,'registrasiUser'])->name('registrasi.user');
 Route::post('/login/user', [authController::class,'login'])->name('login.user');
+Route::get('/myevent', [ClientSideController::class,'myeventPage'])->name('myevent');
+Route::get('/myevent/monitoringAnggota', [ClientSideController::class,'monitoringPutraView'])->name('myevent.monitoringputra');
+Route::get('/myevent/tambahanggota', [ClientSideController::class,'tambahAnggota'])->name('myevent.tambahAnggota');
+

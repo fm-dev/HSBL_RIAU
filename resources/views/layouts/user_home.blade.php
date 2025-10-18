@@ -73,7 +73,8 @@
 				<div class="header-bar">
 					<div class="container clearfix">
 						<!-- website logo -->
-						<div class="logo-header mostion"><a href="index.html"><img src="{{ asset('clientSide/images/logo/logo.png') }}" width="40" height="20" alt=""></a></div>
+						<div class="logo-header mostion">
+							<a href="index.html"><img src="{{ asset('clientSide/images/logo/logo.png') }}" width="40" height="20" alt=""></a></div>
 						<!-- nav toggle button -->
 						<button class="navbar-toggler collapsed navicon justify-content-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 							<span></span>
@@ -83,7 +84,11 @@
 						<!-- extra nav -->
 						<div class="extra-nav">
 							<div class="extra-cell">
-								<a href="/login" type="button" class="site-button radius-xl"><i class="fa fa-sign-in"></i> Login</a>
+								@if(Auth::check())
+									<a href="/profile" type="button" class="site-button radius-xl"><i class="fa fa-user"></i> Profile</a>
+								@else
+									<a href="/login" type="button" class="site-button radius-xl"><i class="fa fa-sign-in"></i> Login</a>
+								@endif
 							</div>
 						</div>
 						<!-- Quik search -->
@@ -96,10 +101,10 @@
 						 <!-- main nav -->
 						<div class="header-nav navbar-collapse collapse justify-content-end"  id="navbarNavDropdown">
 							<ul class=" nav navbar-nav">
-								<li class="active"> <a href="javascript:;">Home<i class="fa fa-chevron-down"></i></a>
+								<li class="active"> <a href="/">Home<i class="fa fa-chevron-down"></i></a>
 									
 								</li>
-								<li> <a href="#about">Tentang Kami<i class="fa fa-chevron-down"></i></a>
+								<li> <a href="/#about">Tentang Kami<i class="fa fa-chevron-down"></i></a>
 									<!-- <ul class="sub-menu">
 										<li> <a href="javascript:;">Header Style Light<i class="fa fa-chevron-down"></i></a>
 											<ul class="sub-menu">
@@ -137,9 +142,12 @@
 										</li>
 									</ul> -->
 								</li>
-								<li> <a href="#jadwal">Jadwal Pertandingan<i class="fa fa-chevron-down"></i></a>
+								<li> <a href="/#jadwal">Jadwal Pertandingan</a>
 								</li>
-								<li> <a href="javascript:;">My Event<i class="fa fa-chevron-down"></i></a>
+								<li> 
+								@if(Auth::check())
+									<a href="/myevent">My Event</a>
+								@endif
 								</li>
 							</ul>
 						</div>
