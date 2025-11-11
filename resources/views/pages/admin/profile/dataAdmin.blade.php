@@ -9,7 +9,7 @@
 					<div class="ps-3">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb mb-0 p-0">
-								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+								<li class="breadcrumb-item">
 								</li>
 								<li class="breadcrumb-item active" aria-current="page">Data Admin</li>
 							</ol>
@@ -24,7 +24,45 @@
             <div class="card w-100 overflow-hidden rounded-4">
               <div class="card-body position-relative p-4">
                 <div class="row ">
-                    
+                    <div class = "mt-2 mb-2">
+                        <a  class = "btn btn-primary">Tambah Admin</a>
+                    </div>
+                    <div class="table-responsive">
+							<table id="dataadmin" class="table table-striped table-bordered" style="width:100%">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Username</th>
+										<th>Email</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>2025110201</td>
+										<td>Khairul Fikri</td>
+										<td>Khairulfikri@gmail.com</td>
+										<td>
+                                            <div class="d-flex gap-2">
+                                                 <button type="button" class="btn btn-warning raised d-flex gap-2"><i class="fadeIn animated bx bx-comment-edit"></i></button>
+                                                 <button type="button" class="btn btn-danger raised d-flex gap-2"><i class="material-icons-outlined">delete</i></button>
+                                            </div>
+                                        </td>
+									</tr>
+									<tr>
+										<td>2025110201</td>
+										<td>Khairul Fikri</td>
+										<td>Khairulfikri@gmail.com</td>
+										<td>
+                                            <div class="d-flex gap-2">
+                                                 <button type="button" class="btn btn-warning raised d-flex gap-2"><i class="fadeIn animated bx bx-comment-edit"></i></button>
+                                                 <button type="button" class="btn btn-danger raised d-flex gap-2"><i class="material-icons-outlined">delete</i></button>
+                                            </div>
+                                        </td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
                 </div><!--end row-->
               </div>
             </div>

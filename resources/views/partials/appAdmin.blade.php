@@ -17,11 +17,13 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('adminSide/assets/plugins/metismenu/mm-vertical.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('adminSide/assets/plugins/simplebar/css/simplebar.css') }}">
   <!--bootstrap css-->
+  <link rel="stylesheet" href="{{ asset('adminSide/assets/css/extra-icons.css') }}">
   <link href="{{ asset('adminSide/assets/css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
   <!--main css-->
   <link href="{{ asset('adminSide/assets/css/bootstrap-extended.css') }}" rel="stylesheet">
+<link href="{{ asset('adminSide/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('adminSide/sass/main.css') }}" rel="stylesheet">
   <link href="{{ asset('adminSide/sass/dark-theme.css') }}" rel="stylesheet">
   <link href="{{ asset('adminSide/sass/blue-theme.css') }}" rel="stylesheet">
@@ -109,6 +111,8 @@
   <script src="{{ asset('adminSide/assets/plugins/apexchart/apexcharts.min.js') }}"></script>
   <script src="{{ asset('adminSide/assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
   <script src="{{ asset('adminSide/assets/plugins/peity/jquery.peity.min.js') }}"></script>
+  <script src="{{ asset('adminSide/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('adminSide/assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
   <script>
     $(".data-attributes span").peity("donut")
   </script>
@@ -116,6 +120,11 @@
   <script src="{{ asset('adminSide/assets/js/dashboard1.js') }}"></script>
   <script>
 	   new PerfectScrollbar(".user-list")
+  </script>
+  <script>
+		$(document).ready(function() {
+			$('#dataadmin').DataTable();
+		  } );
   </script>
 
 </body>
