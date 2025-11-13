@@ -73,9 +73,9 @@
               </li>
               <li><a href="/portal/admin/events/listkompetisi"><i class="material-icons-outlined">arrow_right</i>Kompetisi</a>
               </li>
-              <li><a href="ecommerce-customers.html"><i class="material-icons-outlined">arrow_right</i>Series</a>
+              <li><a href="/portal/admin/events/listSeries"><i class="material-icons-outlined">arrow_right</i>Series</a>
               </li>
-              <li><a href="ecommerce-customer-details.html"><i class="material-icons-outlined">arrow_right</i>Sekolah</a>
+              <li><a href="/portal/admin/events/listSekolah"><i class="material-icons-outlined">arrow_right</i>Sekolah</a>
               </li>
             </ul>     
           </li>
@@ -86,7 +86,7 @@
               <div class="menu-title">Events Score</div>
             </a>
             <ul>
-              <li><a href="component-alerts.html"><i class="material-icons-outlined">arrow_right</i>Histori Pertandingan</a>
+              <li><a href="/portal/admin/events/listScore"><i class="material-icons-outlined">arrow_right</i>Histori Pertandingan</a>
               </li>
             </ul>
           </li>

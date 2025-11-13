@@ -27,4 +27,13 @@ class adminController extends Controller
     public function dataListKompetisi(){
         return view("pages.admin.events.listDataKompetisi");
     }
+    public function dataListSeries(){
+        return view("pages.admin.events.listDataSeries");
+    }
+    public function dataListSekolah(){
+        return view("pages.admin.events.listDataSekolah");
+    }
+    public function dataListScore(){
+        return view("pages.admin.eventsScore.listScore");
+    }
 }

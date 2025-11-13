@@ -23,4 +23,7 @@ Route::get('/portal/admin/useralldata',[adminController::class,'dataUserView'])-
 Route::get('/portal/admin/team/list',[adminController::class,'dataListTeam'])->name('portal.admin.dataListTeam');
 Route::get('/portal/admin/events/listseasons',[adminController::class,'dataListSeasons'])->name('portal.admin.dataListSeasons');
 Route::get('/portal/admin/events/listkompetisi',[adminController::class,'dataListKompetisi'])->name('portal.admin.dataListKompetisi');
+Route::get('/portal/admin/events/listSeries',[adminController::class,'dataListSeries'])->name('portal.admin.dataListSeries');
+Route::get('/portal/admin/events/listSekolah',[adminController::class,'dataListSekolah'])->name('portal.admin.dataListSeries');
+Route::get('/portal/admin/events/listScore',[adminController::class,'dataListScore'])->name('portal.admin.dataListScore');
 
