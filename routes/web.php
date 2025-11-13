@@ -19,4 +19,8 @@ Route::post('/portal/admin/login/signin', [authController::class,'loginAdmin'])-
 Route::get('/portal/admin/index', [adminController::class,'index'])->name('portal.admin.index');
 Route::get('/portal/admin/profile',[adminController::class,'detailProfile'])->name('portal.admin.detailprofile');
 Route::get('/portal/admin/dataAdmin',[adminController::class,'dataAdminView'])->name('portal.admin.dataAdminView');
+Route::get('/portal/admin/useralldata',[adminController::class,'dataUserView'])->name('portal.admin.dataUserView');
+Route::get('/portal/admin/team/list',[adminController::class,'dataListTeam'])->name('portal.admin.dataListTeam');
+Route::get('/portal/admin/events/listseasons',[adminController::class,'dataListSeasons'])->name('portal.admin.dataListSeasons');
+Route::get('/portal/admin/events/listkompetisi',[adminController::class,'dataListKompetisi'])->name('portal.admin.dataListKompetisi');
 

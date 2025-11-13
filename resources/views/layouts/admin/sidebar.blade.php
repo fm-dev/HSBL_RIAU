@@ -41,34 +41,27 @@
             </ul>
           </li>
           <li>
+            <a href="javascript:;" class="has-arrow">
+              <div class="parent-icon"><i class="material-icons-outlined">widgets</i>
+              </div>
+              <div class="menu-title">User</div>
+            </a>
+            <ul>
+              <li><a href="/portal/admin/useralldata"><i class="material-icons-outlined">arrow_right</i>Data users</a>
+              </li>
+            </ul>
+          </li>
+          <li>
             <a class="has-arrow" href="javascript:;">
               <div class="parent-icon"><i class="material-icons-outlined">apps</i>
               </div>
               <div class="menu-title">Kompetisi</div>
             </a>
             <ul>
-              <li><a href="app-emailbox.html"><i class="material-icons-outlined">arrow_right</i>Email Box</a>
-              </li>
-              <li><a href="app-emailread.html"><i class="material-icons-outlined">arrow_right</i>Email Read</a>
-              </li>
-              <li><a href="app-chat-box.html"><i class="material-icons-outlined">arrow_right</i>Chat</a>
-              </li>
-              <li><a href="app-fullcalender.html"><i class="material-icons-outlined">arrow_right</i>Calendar</a>
-              </li>
-              <li><a href="app-to-do.html"><i class="material-icons-outlined">arrow_right</i>To do</a>
-              </li>
-              <li><a href="app-invoice.html"><i class="material-icons-outlined">arrow_right</i>Invoice</a>
+              <li><a href="/portal/admin/team/list"><i class="material-icons-outlined">arrow_right</i>Team List</a>
               </li>
             </ul>
           </li>
-          <li>
-            <a href="cards.html">
-              <div class="parent-icon"><i class="material-icons-outlined">inventory_2</i>
-              </div>
-              <div class="menu-title">Kompetisi</div>
-            </a>
-          </li>
-          
           <li>
             <a href="javascript:;" class="has-arrow">
               <div class="parent-icon"><i class="material-icons-outlined">shopping_bag</i>
@@ -76,17 +69,13 @@
               <div class="menu-title">Events</div>
             </a>
             <ul>
-              <li><a href="ecommerce-add-product.html"><i class="material-icons-outlined">arrow_right</i>Add Product</a>
+              <li><a href="/portal/admin/events/listseasons"><i class="material-icons-outlined">arrow_right</i>Seasons</a>
               </li>
-              <li><a href="ecommerce-products.html"><i class="material-icons-outlined">arrow_right</i>Products</a>
+              <li><a href="/portal/admin/events/listkompetisi"><i class="material-icons-outlined">arrow_right</i>Kompetisi</a>
               </li>
-              <li><a href="ecommerce-customers.html"><i class="material-icons-outlined">arrow_right</i>Customers</a>
+              <li><a href="ecommerce-customers.html"><i class="material-icons-outlined">arrow_right</i>Series</a>
               </li>
-              <li><a href="ecommerce-customer-details.html"><i class="material-icons-outlined">arrow_right</i>Customer Details</a>
-              </li>
-              <li><a href="ecommerce-orders.html"><i class="material-icons-outlined">arrow_right</i>Orders</a>
-              </li>
-              <li><a href="ecommerce-order-details.html"><i class="material-icons-outlined">arrow_right</i>Order Details</a>
+              <li><a href="ecommerce-customer-details.html"><i class="material-icons-outlined">arrow_right</i>Sekolah</a>
               </li>
             </ul>     
           </li>
@@ -97,44 +86,8 @@
               <div class="menu-title">Events Score</div>
             </a>
             <ul>
-              <li><a href="component-alerts.html"><i class="material-icons-outlined">arrow_right</i>Alerts</a>
+              <li><a href="component-alerts.html"><i class="material-icons-outlined">arrow_right</i>Histori Pertandingan</a>
               </li>
-              <li><a href="component-accordions.html"><i class="material-icons-outlined">arrow_right</i>Accordions</a>
-              </li>
-              <li><a href="component-badges.html"><i class="material-icons-outlined">arrow_right</i>Badges</a>
-              </li>
-              <li><a href="component-buttons.html"><i class="material-icons-outlined">arrow_right</i>Buttons</a>
-              </li>
-              <li><a href="component-carousels.html"><i class="material-icons-outlined">arrow_right</i>Carousels</a>
-              </li>
-              <li><a href="component-media-object.html"><i class="material-icons-outlined">arrow_right</i>Media
-                  Objects</a>
-              </li>
-              <li><a href="component-modals.html"><i class="material-icons-outlined">arrow_right</i>Modals</a>
-              </li>
-              <li><a href="component-navs-tabs.html"><i class="material-icons-outlined">arrow_right</i>Navs & Tabs</a>
-              </li>
-              <li><a href="component-navbar.html"><i class="material-icons-outlined">arrow_right</i>Navbar</a>
-              </li>
-              <li><a href="component-paginations.html"><i class="material-icons-outlined">arrow_right</i>Pagination</a>
-              </li>
-              <li><a href="component-popovers-tooltips.html"><i class="material-icons-outlined">arrow_right</i>Popovers
-                  & Tooltips</a>    
-              </li>
-              <li><a href="component-progress-bars.html"><i class="material-icons-outlined">arrow_right</i>Progress</a>
-              </li>
-              <li><a href="component-spinners.html"><i class="material-icons-outlined">arrow_right</i>Spinners</a>
-              </li>
-              <li><a href="component-notifications.html"><i
-                    class="material-icons-outlined">arrow_right</i>Notifications</a>
-              </li>
-              <li><a href="component-avtars-chips.html"><i class="material-icons-outlined">arrow_right</i>Avatrs &
-                  Chips</a>
-              </li>
-              <li><a href="component-typography.html"><i class="material-icons-outlined">arrow_right</i>Typography</a>
-               </li>
-               <li><a href="component-text-utilities.html"><i class="material-icons-outlined">arrow_right</i>Utilities</a>
-               </li>
             </ul>
           </li>
          </ul>
