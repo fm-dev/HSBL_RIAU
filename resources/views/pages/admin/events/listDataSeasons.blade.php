@@ -25,7 +25,7 @@
               <div class="card-body position-relative p-4">
                 <div class="row ">
                     <div class = "mt-2 mb-2">
-                        <a  class = "btn btn-primary">Tambah Seasons</a>
+                        <a href="/events/form" class = "btn btn-primary">Tambah Seasons</a>
                     </div>
                     <div class="table-responsive">
 							<table id="dataadmin" class="table table-striped table-bordered" style="width:100%">

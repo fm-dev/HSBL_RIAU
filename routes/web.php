@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientSideController;
 use App\Http\Controllers\authController;
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\EventController;
 Route::get('/', [ClientSideController::class,'index'])->name('index');
 Route::get('/login', [ClientSideController::class,'login'])->name('login');
 Route::get('/registrasi', [ClientSideController::class,'registrasi'])->name('registrasi');
@@ -26,4 +27,9 @@ Route::get('/portal/admin/events/listkompetisi',[adminController::class,'dataLis
 Route::get('/portal/admin/events/listSeries',[adminController::class,'dataListSeries'])->name('portal.admin.dataListSeries');
 Route::get('/portal/admin/events/listSekolah',[adminController::class,'dataListSekolah'])->name('portal.admin.dataListSeries');
 Route::get('/portal/admin/events/listScore',[adminController::class,'dataListScore'])->name('portal.admin.dataListScore');
+
+Route::prefix('/events')->name('events')->group(function () {
+    Route::get('form',[EventController::class, 'ViewAddSeasons'])->name('form');
+    Route::post('/post',[EventController::class, 'CreatedSeasons'])->name('post');
+});
 
