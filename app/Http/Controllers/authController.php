@@ -32,7 +32,7 @@ class authController extends Controller
 
             return redirect('login')->with('success','Berhasil Login');
 
-        }catch(Exception $e){
+        }catch(\Exception $e){
             return redirect()->route('registrasi')->with('error','Terjadi kesalahan'.$e->getMessage());
         }
     }
@@ -76,7 +76,7 @@ class authController extends Controller
                 return redirect('/portal/admin/registrasi')->with('error','Key anda salah');
 
             }
-        }catch(Exception $e){
+        }catch(\Exception $e){
             return redirect()->route('/portal/admin/registrasi')->with('error','Terjadi kesalahan'.$e->getMessage());
         }
     }
@@ -98,9 +98,9 @@ class authController extends Controller
                 return redirect()->route('portal.admin.login')->with('error', 'username atau password salah');
             }
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
-            return redirect()->route('login')->with('error','Terjadi kesalahan'.$e->getMessage());
+            return redirect()->route('login')->with('error','Terjadi kesalahan'.$ex->getMessage());
 
         }
     }
@@ -122,9 +122,9 @@ class authController extends Controller
                 return redirect()->route('login')->with('error', 'username atau password salah');
             }
         }
-        catch(Exception $ex)
+        catch(\Exception $ex)
         {
-            return redirect()->route('login')->with('error','Terjadi kesalahan'.$e->getMessage());
+            return redirect()->route('login')->with('error','Terjadi kesalahan'.$ex->getMessage());
 
         }
     }

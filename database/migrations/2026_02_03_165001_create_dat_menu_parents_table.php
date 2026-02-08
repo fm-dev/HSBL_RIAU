@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('datrefroles', function (Blueprint $table) {
+        Schema::create('dat_menu_parents', function (Blueprint $table) {
             $table->id();
-            $table->string("nama_role");
-            $table->string("createdby");
-            $table->string("modby");
+            $table->string("labelMenu", 255);
+            $table->string('path')->nullable();
+            $table->integer('roleId');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('datrefroles');
+        Schema::dropIfExists('dat_menu_parents');
     }
 };

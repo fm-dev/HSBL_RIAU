@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('datrefroles', function (Blueprint $table) {
+        Schema::create('dat_wilayahs', function (Blueprint $table) {
             $table->id();
-            $table->string("nama_role");
-            $table->string("createdby");
-            $table->string("modby");
+            $table->string("namaWilayah", 255);
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('datrefroles');
+        Schema::dropIfExists('dat_wilayahs');
     }
 };

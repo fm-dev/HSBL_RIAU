@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("role");
             $table->string("status")->nullable();
             $table->string("alamat")->nullable();
+            $table->string("wilayah")->nullable();
             $table->string("createdby")->nullable();
             $table->string("modby")->nullable();
             $table->timestamps();

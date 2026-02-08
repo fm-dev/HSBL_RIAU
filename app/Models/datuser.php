@@ -17,7 +17,8 @@ class datuser extends Authenticatable
         'status',
         'alamat',
         'createdby',
-        'modby'
+        'modby',
+        'wilayah'
     ];
     protected $hidden = [
         'password'

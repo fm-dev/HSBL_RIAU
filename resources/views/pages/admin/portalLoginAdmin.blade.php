@@ -112,7 +112,7 @@
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: '{{ session('error') }}',
+            text: "{{ session('error') }}"
         });
     </script>
 @endif

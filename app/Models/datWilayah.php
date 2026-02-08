@@ -4,12 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class datrefrole extends Model
+class datWilayah extends Model
 {
     //
     protected $fillable = [
-        'nama_role',
-        'createdby',
-        'modby',
+        'namaWilayah'
     ];
 }
