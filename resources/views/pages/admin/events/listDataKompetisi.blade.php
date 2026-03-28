@@ -25,41 +25,29 @@
               <div class="card-body position-relative p-4">
                 <div class="row ">
                     <div class = "mt-2 mb-2">
-                        <a  class = "btn btn-primary">Tambah Kompetisi</a>
+                        <a href="/admin/kompetisi/create"  class = "btn btn-primary">Tambah Kompetisi</a>
                     </div>
                     <div class="table-responsive">
 							<table id="dataadmin" class="table table-striped table-bordered" style="width:100%">
 								<thead>
 									<tr>
 										<th>ID</th>
-										<th>Seasons</th>
 										<th>Kompetisi</th>
+										<th>Season</th>
 										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
+									@foreach($listKompetisi as $item)
 									<tr>
-										<td>2025110201</td>
-										<td>RIAU POS HSBL2025</td>
-										<td>RIAU POS HSBL BASKET PUTRA 2025 </td>
+										<td>{{$item['id']}}</td>
+										<td>{{$item['name']}}</td>
+										<td>{{$item['seasonName']}}</td>
 										<td>
-                                            <div class="d-flex gap-2">
-                                                 <button type="button" class="btn btn-warning raised d-flex gap-2"><i class="fadeIn animated bx bx-comment-edit"></i></button>
-                                                 <button type="button" class="btn btn-danger raised d-flex gap-2"><i class="material-icons-outlined">delete</i></button>
-                                            </div>
-                                        </td>
+												<a href="{{ url('/admin/kompetisi/delete/' . $item['id']) }}" class="btn btn-danger">Delete</a>
+										</td>
 									</tr>
-									<tr>
-										<td>2025110201</td>
-										<td>RIAU POS HSBL2025</td>
-										<td>
-                                            <div class="d-flex gap-2">
-                                                 <button type="button" class="btn btn-warning raised d-flex gap-2"><i class="fadeIn animated bx bx-comment-edit"></i></button>
-                                                 <button type="button" class="btn btn-danger raised d-flex gap-2"><i class="material-icons-outlined">delete</i></button>
-                                            </div>
-                                        </td>
-									</tr>
-									
+									@endforeach
 								</tbody>
 							</table>
 						</div>

@@ -5,6 +5,9 @@ use App\Http\Controllers\ClientSideController;
 use App\Http\Controllers\authController;
 use App\Http\Controllers\adminController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\masterDataController;
+
+
 Route::get('/', [ClientSideController::class,'index'])->name('index');
 Route::get('/login', [ClientSideController::class,'login'])->name('login');
 Route::get('/registrasi', [ClientSideController::class,'registrasi'])->name('registrasi');
@@ -64,5 +67,26 @@ Route::prefix('/admin')->name('admin.')->middleware('admin.role')->group(functio
     Route::get('wilayah/{id}/edit',[adminController::class, 'editWilayah'])->name('manage_wilayah.edit');
     Route::put('wilayah/{id}',[adminController::class, 'updateWilayah'])->name('manage_wilayah.update');
     Route::delete('wilayah/{id}',[adminController::class, 'deleteWilayah'])->name('manage_wilayah.delete');
+    //session management
+    Route::get('session',[masterDataController::class, 'sessionIndex'])->name('manage_session');
+    Route::get('session/create',[masterDataController::class, 'FormCreatedSeason'])->name('manage_session.create');
+    Route::post('session',[masterDataController::class, 'createdSesions'])->name('manage_session.store');
+    Route::get('session/{id}/edit',[masterDataController::class, 'editSession'])->name('manage_session.edit');
+    Route::put('session/{id}',[masterDataController::class, 'updateSession'])->name('manage_session.update');
+    Route::get('session/delete/{id}',[masterDataController::class, 'deleteSession'])->name('manage_session.delete');
+    //session kompetisi
+    Route::get('kompetisi',[masterDataController::class, 'kompetisiIndex'])->name('manage_session');
+    Route::get('kompetisi/create',[masterDataController::class, 'FormCreatedkompetisi'])->name('manage_session.create');
+    Route::post('kompetisi',[masterDataController::class, 'createdkompetisi'])->name('manage_session.store');
+    Route::get('kompetisi/delete/{id}',[masterDataController::class, 'delteKompetisi'])->name('manage_session.delete');
+    //session managed user
+    Route::get('/masterUser/list',[masterDataController::class, 'listMasterUser'])->name('manage_master_user.list');
+    Route::get('/masterUser/form',[masterDataController::class, 'viewAddUsers'])->name('manage_master_user.form');
+    Route::post('/masterUser/create',[masterDataController::class, 'createdMasterUser'])->name('manage_master_user.create');
+    // series management
+    Route::get('series',[masterDataController::class, 'seriesIndex'])->name('manage_series');
+    Route::get('series/create',[masterDataController::class, 'FormCreatedSeries'])->name('manage_series.create');
+    Route::post('series',[masterDataController::class, 'createdSeries'])->name('manage_series.store');
+    Route::get('series/delete/{id}',[masterDataController::class, 'deleteSeries'])->name('manage_series.delete');
 });
 

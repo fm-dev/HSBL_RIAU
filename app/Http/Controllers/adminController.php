@@ -11,6 +11,9 @@ use App\Models\datMenuChild;
 use App\Models\datWilayah;
 use App\Models\datuser;
 use App\Models\datrefrole;
+use App\Models\datkompetisi;
+use App\Models\datSeason;
+use App\Models\datSeries;
 
 class adminController extends Controller
 {
@@ -30,15 +33,9 @@ class adminController extends Controller
     }
     public function getMenuByRole($roleId)
     {
-        // Get all menu children berdasarkan roleId
-        $menuChildren = datMenuChild::where('roleId', $roleId)->get();
 
-        // Get unique parent IDs
-        $parentIds = $menuChildren->pluck('parentId')->unique();
-
-        // Get parent menus
-        $menuParents = datMenuParent::whereIn('id', $parentIds)->get();
-
+        $menuParents = datMenuParent::where('roleId', $roleId)->get();
+        $menuChildren = datMenuChild::whereIn('parentId', $menuParents->pluck('id'))->get();
         // Build menu structure
         $menus = [];
         foreach ($menuParents as $parent) {
@@ -74,6 +71,7 @@ class adminController extends Controller
     }
     public function dataUserView()
     {
+        $this->ListDataFilter();
         return view('pages.admin.profile.dataUser',$this->atributes);
     }
     public function dataListTeam()
@@ -615,5 +613,11 @@ class adminController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus wilayah: ' . $e->getMessage());
         }
+    }
+    public function ListDataFilter(){
+        $data = datSeason::all();
+        $this->atributes['listSession'] = $data;
+        $dataKompetisi = datkompetisi::all();
+        $this->atributes['listKompetisi'] = $dataKompetisi;
     }
 }

@@ -23,7 +23,7 @@ class EventController extends Controller
             return redirect()->route('portal.admin.dataListSeasons')->with('succes','add data successfuly');
 
         }   
-        catch(Exception $ex){
+        catch(\Exception $ex){
 
              return redirect()->route('login')->with('error','Terjadi kesalahan'.$ex->getMessage());
         }

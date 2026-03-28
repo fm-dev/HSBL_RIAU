@@ -25,7 +25,7 @@
               <div class="card-body position-relative p-4">
                 <div class="row ">
                     <div class = "mt-2 mb-2">
-                        <a href="/events/form" class = "btn btn-primary">Tambah Seasons</a>
+                        <a href="/admin/session/create" class = "btn btn-primary">Tambah Seasons</a>
                     </div>
                     <div class="table-responsive">
 							<table id="dataadmin" class="table table-striped table-bordered" style="width:100%">
@@ -37,27 +37,15 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>2025110201</td>
-										<td>RIAU POS HSBL2025</td>
-										<td>
-                                            <div class="d-flex gap-2">
-                                                 <button type="button" class="btn btn-warning raised d-flex gap-2"><i class="fadeIn animated bx bx-comment-edit"></i></button>
-                                                 <button type="button" class="btn btn-danger raised d-flex gap-2"><i class="material-icons-outlined">delete</i></button>
-                                            </div>
-                                        </td>
-									</tr>
-									<tr>
-										<td>2025110201</td>
-										<td>RIAU POS HSBL2025</td>
-										<td>
-                                            <div class="d-flex gap-2">
-                                                 <button type="button" class="btn btn-warning raised d-flex gap-2"><i class="fadeIn animated bx bx-comment-edit"></i></button>
-                                                 <button type="button" class="btn btn-danger raised d-flex gap-2"><i class="material-icons-outlined">delete</i></button>
-                                            </div>
-                                        </td>
-									</tr>
-									
+									@foreach($listSession as $item)
+										<tr>
+											<td>{{$item['id']}}</td>
+											<td>{{$item['name']}}</td>
+											<td>
+												<a href="{{ url('/admin/session/delete/' . $item['id']) }}" class="btn btn-danger">Delete</a>
+											</td>
+										</tr>
+									@endforeach
 								</tbody>
 							</table>
 						</div>

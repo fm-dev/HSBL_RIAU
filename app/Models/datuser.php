@@ -18,6 +18,10 @@ class datuser extends Authenticatable
         'alamat',
         'createdby',
         'modby',
+        'wilayah',
+        'kompetisi_id',
+        'series_id',
+        'asal_sekolah',
         'wilayah'
     ];
     protected $hidden = [
