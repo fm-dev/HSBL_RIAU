@@ -67,8 +67,6 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            <th>NickName</th>
-                                            <th>Password</th>
                                             <th>Series</th>
                                             <th>Session</th>
                                             <th>Kompetisi</th>
@@ -76,6 +74,33 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                        @forelse($listUsers as $user)
+                                        <tr>
+                                            <td>{{ $user->user_id }}</td>
+                                            <td>{{ $user->username }}</td>
+                                            <td>{{ $user->email ?? '-' }}</td>
+                                            <td>{{ $user->seriesName ?? '-' }}</td>
+                                            <td>{{ $user->seasonName ?? '-' }}</td>
+                                            <td>{{ $user->kompetisiName ?? '-' }}</td>
+                                            <td>{{ $user->namaSekolah ?? '-' }}</td>
+                                            <td class="gap-2">
+                                                <button class="btn btn-sm btn-secondary" title="Detail">
+                                                    Detail
+                                                </button>
+                                                <button class="btn btn-sm btn-primary" title="Edit">
+                                                    Edit
+                                                </button>
+                                                <a href="/admin/masterUser/delete/{{ $user->id }}" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this user?')">
+                                                    Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="10" class="text-center">No users found.</td>
+                                        </tr>
+                                        @endforelse
                                 </table>
                             </div>
                         </div><!--end row-->

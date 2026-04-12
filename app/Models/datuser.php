@@ -19,8 +19,7 @@ class datuser extends Authenticatable
         'createdby',
         'modby',
         'wilayah',
-        'kompetisi_id',
-        'series_id',
+        'kompetisi_event_id',
         'asal_sekolah',
         'wilayah'
     ];

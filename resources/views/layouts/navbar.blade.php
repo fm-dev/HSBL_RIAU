@@ -39,6 +39,7 @@
 							<div class="extra-cell">
 								@if(Auth::check())
 									<a href="/profile" type="button" class="site-button radius-xl"><i class="fa fa-user"></i> Profile</a>
+									<a href="/logout" type="button" class="btn btn-danger radius-xl"><i class="fa fa-sign-out"></i> Logout</a>
 								@else
 									<a href="/login" type="button" class="site-button radius-xl"><i class="fa fa-sign-in"></i> Login</a>
 								@endif

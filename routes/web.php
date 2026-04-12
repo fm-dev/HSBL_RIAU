@@ -31,7 +31,7 @@ Route::get('/portal/admin/events/listSeries',[adminController::class,'dataListSe
 Route::get('/portal/admin/events/listSekolah',[adminController::class,'dataListSekolah'])->name('portal.admin.dataListSeries')->middleware('admin.role');
 Route::get('/portal/admin/events/listScore',[adminController::class,'dataListScore'])->name('portal.admin.dataListScore')->middleware('admin.role');
 Route::get('/portal/admin/logout',[adminController::class,'logout'])->name('portal.admin.logout')->middleware('admin.role');
-
+Route::get('/logout',[authController::class,'logout'])->name('logout');
 Route::prefix('/events')->name('events')->group(function () {
     Route::get('form',[EventController::class, 'ViewAddSeasons'])->name('form');
     Route::post('/post',[EventController::class, 'CreatedSeasons'])->name('post');
@@ -83,10 +83,33 @@ Route::prefix('/admin')->name('admin.')->middleware('admin.role')->group(functio
     Route::get('/masterUser/list',[masterDataController::class, 'listMasterUser'])->name('manage_master_user.list');
     Route::get('/masterUser/form',[masterDataController::class, 'viewAddUsers'])->name('manage_master_user.form');
     Route::post('/masterUser/create',[masterDataController::class, 'createdMasterUser'])->name('manage_master_user.create');
+    Route::get('/masterUser/delete/{id}',[masterDataController::class, 'deleteMasterUser'])->name('manage_master_user.delete');
     // series management
     Route::get('series',[masterDataController::class, 'seriesIndex'])->name('manage_series');
     Route::get('series/create',[masterDataController::class, 'FormCreatedSeries'])->name('manage_series.create');
     Route::post('series',[masterDataController::class, 'createdSeries'])->name('manage_series.store');
     Route::get('series/delete/{id}',[masterDataController::class, 'deleteSeries'])->name('manage_series.delete');
+    //Series Sekolah
+    Route::get('sekolah',[masterDataController::class, 'sekolahIndex'])->name('manage_sekolah');
+    Route::get('sekolah/form',[masterDataController::class,'formSekolah'])->name('manage_sekolah.create');
+    Route::post('sekolah/create',[masterDataController::class, 'storesekolah'])->name('manage_sekolah.create');
+    Route::get('sekolah/delete/{id}',[masterDataController::class, 'deleteSekolah'])->name('manage_sekolah.delete');
+    Route::get('sekolah/edit/{id}',[masterDataController::class, 'editSekolah'])->name('manage_sekolah.edit');
+    Route::post('sekolah/update/{id}',[masterDataController::class, 'updateSekolah'])->name('manage_sekolah.update');
+    //kompetisi management
+    Route::get('kompetisi/team_list',[masterDataController::class, 'teamList'])->name('manage_kompetisi');
+    Route::get('kompetisi/form',[masterDataController::class, 'formKompetisi'])->name('manage_kompetisi.create');
+    Route::post('kompetisi/create',[masterDataController::class, 'storeKompetisiEvents'])->name('manage_kompetisi.create');
+    Route::get('kompetisi/team_list/delete/{id}',[masterDataController::class, 'deleteKompetisiEvents'])->name('manage_kompetisi.delete');
+    Route::get('kompetisi/team_list/edit/{id}',[masterDataController::class, 'editKompetisiEvents'])->name('manage_kompetisi.edit');
+    Route::post('kompetisi/team_list/update/{id}',[masterDataController::class, 'updateKompetisiEvents'])->name('manage_kompetisi.update');
+    //kompetisi managemenet team verification
+    Route::get('/kompetisi/team_verification',[masterDataController::class, 'teamVerificationList'])->name('manage_kompetisi.verify.list');
+    Route::get('/kompetisi/team_verification/detail/{id}',[masterDataController::class, 'teamVerificationDetail'])->name('manage_kompetisi.verify.detail');
+    //kompetisi management blacklist team
+    Route::get('/kompetisi/black_list',[masterDataController::class, 'teamBlacklistList'])->name('manage_kompetisi.blacklist.list');
+    Route::get('/kompetisi/team_blacklist/form',[masterDataController::class, 'teamBlacklistForm'])->name('manage_kompetisi.blacklist.form');
+    Route::post('/kompetisi/team_blacklist/store',[masterDataController::class, 'teamBlacklistStore'])->name('manage_kompetisi.blacklist.store');
+    Route::get('/kompetisi/team_blacklist/delete/{id}',[masterDataController::class, 'teamBlacklistDelete'])->name('manage_kompetisi.blacklist.delete');
 });
 

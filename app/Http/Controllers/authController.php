@@ -134,5 +134,9 @@ class authController extends Controller
     public function portal_registrasi_admin(){
         return view("pages.admin.portalRegisterAdmin");
     }
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('index')->with('success', 'berhasil logout');
+    }
 
 }

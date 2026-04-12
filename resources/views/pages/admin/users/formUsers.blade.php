@@ -36,52 +36,35 @@
                                     <input type="email" name="email" class="form-control" id="user" placeholder="Enter Email">
                                 </div>
                                 <div class="col-12">
-                                    <label for="user" class="form-label">Nickname</label>
-                                    <input type="text" name="nickname"   class="form-control" id="user" placeholder="Enter Nickname">
-                                </div>
-                                <div class="col-12">
                                     <label for="user" class="form-label">Password</label>
                                     <input type="password" name="password" class="form-control" id="user" placeholder="Enter Password">
-                                </div>
-                                <div class="col-12">
-                                    <label for="user" class="form-label">Series</label>
-                                    <select class="form-select" aria-label="Default select example" name="series_id">
-                                        @foreach ($series as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <label for="user" class="form-label">Session</label>
-                                    <select class="form-select" aria-label="Default select example" name="session_id">
-                                        @foreach ($season as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <label for="user" class="form-label">Kompetisi</label>
-                                    <select class="form-select" aria-label="Default select example" name="kompetisi_id">
-                                        @foreach ($kompetisi as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <label for="user" class="form-label">Asal Sekolah</label>
-                                    <input type="text" name="asal_sekolah" class="form-control" id="user" placeholder="Enter Asal Sekolah">
                                 </div>
                                 <div class="col-12">
                                     <label for="user" class="form-label">No. Telepon</label>
                                     <input type="text" name="phone" class="form-control" id="user" placeholder="Enter No. Telepon">
                                 </div>
                                 <div class="col-12">
-                                    <label for="user" class="form-label">Alamat Sekolah</label>
-                                    <input type="text" name="alamat_sekolah" class="form-control" id="user" placeholder="Enter Alamat Sekolah">
+                                    <label for="user" class="form-label">Kompetisi</label>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Nama Kompetisi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($listKompetisiEvents as $item)
+                                            <tr>
+                                                <td><input type="checkbox" name="kompetisi_event_id[]" value="{{ $item->id }}"></td>
+                                                <td>{{ $item->namaTeam }} | {{ $item->namaSekolah }} | {{ $item->kompetisiName }} | {{ $item->seasonName }} | {{ $item->seriesName }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+
                                 </div>
+                                
                                 <button type="submit" class="btn btn-primary mt-3 mb-3 ">Simpan</button>
-
-
                             </div><!--end row-->
                         </div>
                     </form>

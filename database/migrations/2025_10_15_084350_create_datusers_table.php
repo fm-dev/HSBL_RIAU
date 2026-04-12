@@ -21,9 +21,7 @@ return new class extends Migration
             $table->string("status")->nullable();
             $table->string("alamat")->nullable();
             $table->string("wilayah")->nullable();
-            $table->unsignedBigInteger("kompetisi_id")->nullable();
-            $table->unsignedBigInteger("series_id")->nullable();
-            $table->unsignedBigInteger("session_id")->nullable();
+            $table->string("kompetisi_event_id")->nullable();
             $table->string("asal_sekolah")->nullable();
             $table->string("createdby")->nullable();
             $table->string("modby")->nullable();

@@ -30,20 +30,16 @@
                                                                 <option value="3">Three</option>
                                                         </select>
                                                 </div>
+                                                @foreach ($listKompetisiEvents as $item)
                                                 <div class = "d-flex justify-content-center mt-5 ">
                                                         <div class = "p-4 w-100 " style = "background-image:url({{ asset('clientSide/images/main-slider/hsblassests/basketputra.png') }}); background-size: cover; background-position: center;height: 170px">
-                                                                <div class = "h2 text-white">Basket Putra</div>
+                                                                <div class = "h2 text-white">{{ $item->kompetisiName }}</div>
                                                                 <a href="/myevent/monitoringAnggota" class = "btn btn-warning">Lihat Detail</a>
                                                         </div>
                                                         
                                                 </div>
-                                                <div class = "d-flex justify-content-center mt-2 ">
-                                                        <div class = "p-4 w-100 " style = "background-image:url({{ asset('clientSide/images/main-slider/hsblassests/basketputri.png') }}); background-size: cover; background-position: center;height: 170px">
-                                                                <div class = "h2 text-white">Basket Putri</div>
-                                                                <a href="/myevent/monitoringAnggota" class = "btn btn-warning">Lihat Detail</a>
-                                                        </div>
-                                                        
-                                                </div>
+                                                @endforeach
+                                                
                                         </div>
                                 </div>
                         </div>

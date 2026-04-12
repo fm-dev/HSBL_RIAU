@@ -620,4 +620,5 @@ class adminController extends Controller
         $dataKompetisi = datkompetisi::all();
         $this->atributes['listKompetisi'] = $dataKompetisi;
     }
+    
 }
