@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dat_seasons', function (Blueprint $table) {
+        Schema::create('dat_posisis', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('path_template_izinOrtu');
-            $table->string('path_template_izin_kepala_sekolah');
-            $table->string('createdby');
-            $table->string('modby')->nullable();
+            $table->string('namaPosisi');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dat_seasons');
+        Schema::dropIfExists('dat_posisis');
     }
 };

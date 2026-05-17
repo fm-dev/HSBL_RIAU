@@ -9,6 +9,8 @@ class datSeason extends Model
     //
     protected $fillable = [
         'name',
+        'path_template_izinOrtu',
+        'path_template_izin_kepala_sekolah',
         'createdby',
         'modby'
     ];

@@ -24,11 +24,19 @@
                 <div class="card w-100 overflow-hidden rounded-4">
                     <div class="card-body position-relative p-4">
                         <div class="row ">
-                            <form method="post" action="/admin/session">
+                            <form method="post" action="/admin/session"  enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="name_sesion" class="form-label">Name Sesion</label>
                                     <input type="text" class="form-control " id="name_sesion" name="name_sesion" value="{{ old('name_sesion') }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="path_template_izinOrtu" class="form-label">Path Template Izin Orang Tua</label>
+                                    <input type="file" class="form-control" id="path_template_izinOrtu" name="path_template_izinOrtu" value="{{ old('path_template_izinOrtu') }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="path_template_izin_kepala_sekolah" class="form-label">Path Template Izin Kepala Sekolah</label>
+                                    <input type="file" class="form-control" id="path_template_izin_kepala_sekolah" name="path_template_izin_kepala_sekolah" value="{{ old('path_template_izin_kepala_sekolah') }}" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </form>

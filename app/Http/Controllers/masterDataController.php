@@ -13,6 +13,8 @@ use App\Models\datSeries;
 use App\Models\datSekolah;
 use App\Models\datKompetisiEvent;
 use App\Models\blacklistTeam;
+use App\Models\datPosisi;
+use App\Models\datWilayah;
 use Illuminate\Support\Facades\DB;
 use PDO;
 
@@ -71,13 +73,22 @@ class masterDataController extends Controller
         try {
             $data = $request->validate([
                 'name_sesion' => 'required|string',
+                'path_template_izinOrtu' => 'required|file|mimes:pdf,doc,docx',
+                'path_template_izin_kepala_sekolah' => 'required|file|mimes:pdf,doc,docx',
             ]);
+
+            // Simpan file ke storage/public/sessions
+            $fileOrtuPath = $request->file('path_template_izinOrtu')->store('sessions', 'public');
+            $fileKepalaPath = $request->file('path_template_izin_kepala_sekolah')->store('sessions', 'public');
 
             datSeason::create([
                 'name' => $data['name_sesion'],
+                'path_template_izinOrtu' => $fileOrtuPath,
+                'path_template_izin_kepala_sekolah' => $fileKepalaPath,
                 'createdby' => Auth::id(),
                 'modby' => Auth::id(),
             ]);
+
             return redirect('admin/session')->with('success', 'Season berhasil dibuat.');
         } catch (\Exception $ex) {
             return redirect('admin/session')->with('error', 'Gagal membuat season: ' . $ex->getMessage());
@@ -148,8 +159,21 @@ class masterDataController extends Controller
     }
     public function listMasterUser()
     {
+        $dataUser = Auth::user();
 
-        $listUsers = datuser::join('dat_kompetisi_events', function ($join) {
+        // Mulai query builder
+        $query = datuser::query();
+
+        // Filter role & wilayah jika user role 2
+        if ($dataUser->role == 2) {
+            $query->where('wilayah', $dataUser->wilayah);
+        }
+
+        // Ambil hanya user role 3
+        $query->where('role', 3);
+
+        // Join tabel terkait
+        $listUsers = $query->join('dat_kompetisi_events', function ($join) {
             $join->on(DB::raw('FIND_IN_SET(dat_kompetisi_events.id, datusers.kompetisi_event_id)'), '>', DB::raw('0'));
         })
             ->join('dat_sekolahs', 'dat_kompetisi_events.idSekolah', '=', 'dat_sekolahs.id')
@@ -160,32 +184,44 @@ class masterDataController extends Controller
                 'datusers.id as user_id',
                 'datusers.username',
                 'datusers.email',
-                // gabungkan semua series, session, kompetisi, dan sekolah jadi satu string
                 DB::raw("GROUP_CONCAT(DISTINCT dat_series.name SEPARATOR ', ') as seriesName"),
                 DB::raw("GROUP_CONCAT(DISTINCT dat_seasons.name SEPARATOR ', ') as seasonName"),
                 DB::raw("GROUP_CONCAT(DISTINCT datkompetisis.name SEPARATOR ', ') as kompetisiName"),
                 DB::raw("GROUP_CONCAT(DISTINCT dat_sekolahs.namaSekolah SEPARATOR ', ') as namaSekolah")
             )
             ->groupBy('datusers.id', 'datusers.username', 'datusers.email')
-            ->where('datusers.role', 3)
             ->get();
+
         $this->atributes['listUsers'] = $listUsers;
+
         return view('pages.admin.users.listUsers', $this->atributes);
     }
     public function viewAddUsers()
     {
-        $data = datKompetisiEvent::join('dat_sekolahs', 'dat_kompetisi_events.idSekolah', '=', 'dat_sekolahs.id')
-            ->join('datkompetisis', 'dat_kompetisi_events.idKompetisi', '=', 'datkompetisis.id')
+        $user = Auth::user();
+        $dataWilaya = datWilayah::find($user->wilayah);
+
+        $query = datKompetisiEvent::query()
+            ->join('dat_sekolahs', 'dat_kompetisi_events.idSekolah', '=', 'dat_sekolahs.id')
+            ->join('datkompetisis as kompetisi', 'dat_kompetisi_events.idKompetisi', '=', 'kompetisi.id')
             ->join('dat_series', 'dat_kompetisi_events.idSeries', '=', 'dat_series.id')
-            ->join('dat_seasons', 'datkompetisis.seasonId', '=', 'dat_seasons.id')
+            ->join('dat_seasons', 'kompetisi.seasonId', '=', 'dat_seasons.id')
             ->select(
                 'dat_kompetisi_events.*',
                 'dat_sekolahs.namaSekolah',
-                'datkompetisis.name as kompetisiName',
+                'kompetisi.name as kompetisiName',
                 'dat_seasons.name as seasonName',
                 'dat_series.name as seriesName'
-            )
-            ->get();
+            );
+
+        // Filter khusus jika user role 2
+        if ($user->role == 2 && $dataWilaya) {
+            $query->where('dat_series.name', $dataWilaya->namaWilayah);
+        }
+
+        // Ambil data
+        $data = $query->get();
+
         $this->atributes['listKompetisiEvents'] = $data;
         return view('pages.admin.users.formUsers', $this->atributes);
     }
@@ -364,6 +400,8 @@ class masterDataController extends Controller
 
     public function teamList()
     {
+        $dataUser = Auth::user();
+        $dataWilaya = datWilayah::find($dataUser->wilayah);
         $data = datKompetisiEvent::join('dat_sekolahs', 'dat_kompetisi_events.idSekolah', '=', 'dat_sekolahs.id')
             ->join('datkompetisis', 'dat_kompetisi_events.idKompetisi', '=', 'datkompetisis.id')
             ->join('dat_series', 'dat_kompetisi_events.idSeries', '=', 'dat_series.id')
@@ -374,19 +412,27 @@ class masterDataController extends Controller
                 'datkompetisis.name as kompetisiName',
                 'dat_seasons.name as seasonName',
                 'dat_series.name as seriesName'
-            )
-            ->get();
+            );
+        if ($dataUser->role == 2 && $dataWilaya) {
+            $data->where('dat_series.name', $dataWilaya->namaWilayah);
+        }
+        $data = $data->get();
+            
+
         $this->atributes['listKompetisiEvents'] = $data;
         $this->atributes['statusVerifikasi'] = false;
         return view('pages.admin.kompetisiTournament.list', $this->atributes);
     }
     public function formKompetisi()
     {
+        $dataUser = Auth::user();
+        $dataWilaya = datWilayah::find($dataUser->wilayah);
         $this->atributes['listSekolah'] = datSekolah::all();
         $this->atributes['listKompetisi'] = datkompetisi::JOIN('dat_seasons', 'datkompetisis.seasonId', '=', 'dat_seasons.id')
             ->select('datkompetisis.*', 'dat_seasons.name as seasonName')
             ->get();
-        $this->atributes['listSeries'] = datSeries::all();
+        $this->atributes['listSeries'] = ($dataUser->role == 2 && $dataWilaya) ? datSeries::where('name', $dataWilaya->namaWilayah)->get() : datSeries::all();
+
         return view('pages.admin.kompetisiTournament.form', $this->atributes);
     }
     public function storeKompetisiEvents(Request $req)
@@ -489,6 +535,8 @@ class masterDataController extends Controller
     }
     public function teamVerificationList()
     {
+        $dataUser = Auth::user();
+        $dataWilaya = datWilayah::find($dataUser->wilayah);
         $data = datKompetisiEvent::join('dat_sekolahs', 'dat_kompetisi_events.idSekolah', '=', 'dat_sekolahs.id')
             ->join('datkompetisis', 'dat_kompetisi_events.idKompetisi', '=', 'datkompetisis.id')
             ->join('dat_series', 'dat_kompetisi_events.idSeries', '=', 'dat_series.id')
@@ -500,8 +548,12 @@ class masterDataController extends Controller
                 'dat_seasons.name as seasonName',
                 'dat_series.name as seriesName'
             )
-            ->where('verifData', 'true')
-            ->get();
+            ->where('verifData', 'true');
+        if ($dataUser->role == 2 && $dataWilaya) {
+            $data->where('dat_series.name', $dataWilaya->namaWilayah);
+        }
+        $data = $data->get();
+        
         $this->atributes['listKompetisiEvents'] = $data;
         $this->atributes['statusVerifikasi'] = true;
         return view('pages.admin.kompetisiTournament.list', $this->atributes);
@@ -531,6 +583,8 @@ class masterDataController extends Controller
     }
     public function teamBlacklistList()
     {
+        $dataUser = Auth::user();
+        $dataWilaya = datWilayah::find($dataUser->wilayah);
         $data = blacklistTeam::join('dat_kompetisi_events', 'blacklist_teams.kompetisiEventId', '=', 'dat_kompetisi_events.id')
             ->join('dat_sekolahs', 'dat_kompetisi_events.idSekolah', '=', 'dat_sekolahs.id')
             ->join('datkompetisis', 'dat_kompetisi_events.idKompetisi', '=', 'datkompetisis.id')
@@ -544,14 +598,19 @@ class masterDataController extends Controller
                 'datkompetisis.name as kompetisiName',
                 'dat_seasons.name as seasonName',
                 'dat_series.name as seriesName'
-            )->where('statusBlackList', 'true')
-            ->get();
+            )->where('statusBlackList', 'true');
+        if ($dataUser->role == 2 && $dataWilaya) {
+            $data->where('dat_series.name', $dataWilaya->namaWilayah);
+        }
+        $data = $data->get();
         // var_dump($data);
         $this->atributes['listKompetisiEvents'] = $data;
         return view('pages.admin.kompetisiTournament.blacklist', $this->atributes);
     }
     public function teamBlacklistForm()
     {
+        $dataUser = Auth::user();
+        $dataWilaya = datWilayah::find($dataUser->wilayah);
         $data = datKompetisiEvent::join('dat_sekolahs', 'dat_kompetisi_events.idSekolah', '=', 'dat_sekolahs.id')
             ->join('datkompetisis', 'dat_kompetisi_events.idKompetisi', '=', 'datkompetisis.id')
             ->join('dat_series', 'dat_kompetisi_events.idSeries', '=', 'dat_series.id')
@@ -563,8 +622,11 @@ class masterDataController extends Controller
                 'datkompetisis.name as kompetisiName',
                 'dat_seasons.name as seasonName',
                 'dat_series.name as seriesName'
-            )
-            ->get();
+            );
+        if ($dataUser->role == 2 && $dataWilaya) {
+            $data->where('dat_series.name', $dataWilaya->namaWilayah);
+        }
+        $data = $data->get();
 
         $this->atributes['kompetisiEvent'] = $data;
         return view('pages.admin.kompetisiTournament.formBlackList', $this->atributes);
@@ -619,6 +681,44 @@ class masterDataController extends Controller
             return redirect('admin/masterUser/list')->with('success', 'User berhasil dihapus.');
         } catch (\Exception $ex) {
             return redirect('admin/masterUser/list')->with('error', 'Gagal menghapus user: ' . $ex->getMessage());
+        }
+    }
+    public function listPositions()
+    {
+        $data = datPosisi::get();
+        $this->atributes['data'] = $data;
+        return view("pages.admin.position.list", $this->atributes);
+    }
+    public function formPositions()
+    {
+        return view("pages.admin.position.form",  $this->atributes);
+    }
+    public function createPositions(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $data = $request->validate([
+                'namaPosisi' => 'required|string',
+            ]);
+            datPosisi::create($data);
+            DB::commit();
+            return redirect('admin/positions/list')->with('success', 'success created data.');
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect('admin/positions/form')->with('error', 'Gagal create position: ' . $ex->getMessage());
+        }
+    }
+    public function deletePositions(Request $req)
+    {
+        try {
+            $position = datPosisi::find($req->get('id'));
+            if (!$position) {
+                return redirect('admin/positions/list')->with('error', 'position tidak ditemukan.');
+            }
+            $position->delete();
+            return redirect('admin/positions/list')->with('success', 'position berhasil dihapus.');
+        } catch (\Exception $ex) {
+            return redirect('admin/positions/list')->with('error', 'Gagal menghapus position: ' . $ex->getMessage());
         }
     }
 }
