@@ -65,7 +65,7 @@
                                             alt="User Image">
 
                                         <a class="text-dark">{{ $item->nama }}</a>
-                                        <small class="text-secondary">{{ $item->leader }}</small>
+                                        <small class="text-secondary">{{ $item->namaPosisi }}</small>
                                     </div>
 
                                     <div class="d-flex gap-2 mt-2">

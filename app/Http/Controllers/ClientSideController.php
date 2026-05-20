@@ -143,11 +143,13 @@ class ClientSideController extends Controller
             )
             ->where('dat_kompetisi_events.id', $request->get('idevent'))->first();
         $dataPeserta = datPeserta::join('dat_kompetisi_events', 'dat_kompetisi_events.id', '=', 'dat_pesertas.id_events')
+        ->join('dat_posisis', 'dat_posisis.id', '=', 'dat_pesertas.id_posisi')
             ->select(
                 'dat_pesertas.namaLengkap as nama',
                 'dat_pesertas.id as idPeserta',
                 'dat_kompetisi_events.leader as leader',
                 'dat_pesertas.path_photo as pathPhoto',
+                'dat_posisis.namaPosisi as namaPosisi',
             )
             ->where('id_events', $request->get('idevent'))->get();
         $dataOfficial = datofficial::where('eventsId', $request->get('idevent'))->get();
