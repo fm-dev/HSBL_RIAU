@@ -430,7 +430,7 @@
 								<div class="row w-100">
 									<div class="d-flex flex-column flex-md-row flex-xl-row justify-content-center align-items-center gap-5">
 										<div class="col-12 col-md-5 col-lg-5 justify-content-center align-items-center text-center background-with-opacity" 
-											style="background-image: url('{{ $dataFinal?->sekolah_team1 ? asset('storage/' . $dataFinal->sekolah_team1) : asset('clientSide/images/logoTeam/team1.png') }}')"
+											style=" background-size: cover;background-repeat: no-repeat;background-position: center;background-image: url('{{ $dataFinal?->sekolah_team1 ? asset('storage/' . $dataFinal->sekolah_team1) : asset('clientSide/images/logoTeam/team1.png') }}')"
 											>
 											<div class="d-flex flex-column  justify-content-center align-items-center" style="background: rgba(0, 0, 0, 0.4)">
 												<div class="h4 text-uppercase text-white">{{$dataFinal->first_team_name ?? "??"}}</div>
@@ -441,7 +441,7 @@
 										<h1 class="h2 text-uppercase">VS</h1>
 
 										<div class="col-12 col-md-5 col-lg-5  justify-content-center align-items-center text-center" 
-										style="background-image: url('{{ $dataFinal?->sekolah_team2 ? asset('storage/' . $dataFinal->sekolah_team2) : asset('clientSide/images/logoTeam/team1.png') }}')">
+										style=" background-size: cover;background-repeat: no-repeat;background-position: center;	background-image: url('{{ $dataFinal?->sekolah_team2 ? asset('storage/' . $dataFinal->sekolah_team2) : asset('clientSide/images/logoTeam/team1.png') }}')">
 											<div class="d-flex flex-column justify-content-center align-items-center" style="background: rgba(0, 0, 0, 0.4)">
 												<div class="score text-white">{{$dataFinal->score_second_teeam ?? "??"}}</div> <!-- Skor untuk Team 2 -->
 												<div class="h4 text-uppercase text-white">{{$dataFinal->second_team_name ?? "??"}}</div>
