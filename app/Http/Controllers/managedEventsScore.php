@@ -9,6 +9,7 @@ use App\Models\datMenuChild;
 use App\Models\datMenuParent;
 use App\Models\datSeason;
 use App\Models\datSeries;
+use App\Models\datuser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,16 +61,37 @@ class managedEventsScore extends Controller
     }
     public function dashboard()
     {
-        $data = datkompetisi::get();
+        $dataLogin = Auth::user();
+
+        $datauser = datuser::join('dat_wilayahs as w', 'datusers.wilayah', '=', 'w.id')
+            ->select('datusers.*', 'w.namaWilayah as nama_wilayah')
+            ->where('datusers.id', $dataLogin->id)
+            ->first();
+
+        // dd($datauser); // aktifkan hanya untuk debugging
+
+        $data = datkompetisi::join('dat_seasons as s', 'datkompetisis.seasonId', '=', 's.id')
+            ->join('dat_series as se', 's.seriesId', '=', 'se.id')
+            ->select('datkompetisis.*', 'se.name as series_name');
+
+        if ($datauser && $datauser->role == 2) {
+            $data = $data->where('se.name', $datauser->nama_wilayah);
+        }
+
+        $data = $data->get();
         $dataPertandingan = datEventsScore::query()
             ->leftJoin('dat_kompetisi_events as team1', 'dat_events_scores.firstTeam_id', '=', 'team1.id')
             ->leftJoin('dat_kompetisi_events as team2', 'dat_events_scores.secondTeam_id', '=', 'team2.id')
-            ->leftJoin('datkompetisis as k', 'dat_events_scores.kompetisi_id', '=', 'k.id') // join ke tabel kompetisi
+            ->leftJoin('datkompetisis as k', 'dat_events_scores.kompetisi_id', '=', 'k.id')
+            ->leftjoin('dat_seasons as s', 'k.seasonId', '=', 's.id')
+            ->leftJoin('dat_series as se', 's.seriesId', '=', 'se.id')
             ->select(
                 'dat_events_scores.*',
                 'team1.namaTeam as first_team_name',
                 'team2.namaTeam as second_team_name',
-                'k.name as kompetisi_name' // ambil nama kompetisi
+                'k.name as kompetisi_name',
+                'se.name as series_name',
+                's.name as season_name'
             )
             ->orderBy('dat_events_scores.datebegin', 'desc')
             ->get();
@@ -148,6 +170,87 @@ class managedEventsScore extends Controller
             return redirect()
                 ->back()
                 ->with('error', 'Gagal : ' . $ex->getMessage());
+        }
+    }
+    // Menampilkan form edit
+    public function edit($id)
+    {
+        $eventScore = datEventsScore::findOrFail($id);
+
+        $datakompetisi = datkompetisi::where('id', $eventScore->kompetisi_id)->first();
+        $dataTeam = datKompetisiEvent::where('idKompetisi', $eventScore->kompetisi_id)->get();
+        $dataSession = datSeason::where('id', $datakompetisi->seasonId)->first();
+        $dataSeries = datSeries::where('id', $dataTeam[0]->idSeries)->first();
+
+        // Menampung semua data di atribut
+        $this->atributes['eventScore'] = $eventScore;
+        $this->atributes['datakompetisi'] = $datakompetisi;
+        $this->atributes['dataTeam'] = $dataTeam;
+        $this->atributes['dataSession'] = $dataSession;
+        $this->atributes['dataseries'] = $dataSeries;
+        $this->atributes['id_events'] = $datakompetisi->id;
+
+        return view('pages.admin.eventsScore.edit', $this->atributes);
+    }
+
+    // Update data
+    public function update(Request $request, $id)
+    {
+
+
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                'team_1' => 'required|integer|different:team_2',
+                'team_2' => 'required|integer|different:team_1',
+                'tanggal_pertandingan' => 'required|date',
+                'jam_pertandingan' => 'required|date_format:H:i',
+                'score_team_1' => 'required|integer|min:0',
+                'score_team_2' => 'required|integer|min:0',
+            ], [
+                'team_1.different' => 'Team 1 dan Team 2 tidak boleh sama.',
+                'team_2.different' => 'Team 1 dan Team 2 tidak boleh sama.',
+            ]);
+
+            $eventScore = datEventsScore::findOrFail($id);
+            $eventScore->update([
+                'firstTeam_id' => $request->team_1,
+                'secondTeam_id' => $request->team_2,
+                'datebegin' => Carbon::parse($request->tanggal_pertandingan . ' ' . $request->jam_pertandingan),
+                'time_begin' => $request->jam_pertandingan,
+                'score_first_teeam' => $request->score_team_1,
+                'score_second_teeam' => $request->score_team_2,
+                'isFinal' => $request->has('isFinal') ? 1 : 0,
+            ]);
+
+            DB::commit();
+
+            return redirect()
+                ->route('admin.eventsScore.dashboard') // bisa diarahkan ke dashboard
+                ->with('success', 'Data pertandingan berhasil diperbarui.');
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Gagal memperbarui data: ' . $ex->getMessage());
+        }
+    }
+    // Delete data pertandingan
+    public function destroy($id)
+    {
+        $eventScore = datEventsScore::findOrFail($id);
+
+        DB::beginTransaction();
+        try {
+            $eventScore->delete(); // hapus data
+
+            DB::commit();
+            return redirect()
+                ->back()
+                ->with('success', 'Data pertandingan berhasil dihapus.');
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return redirect()
+                ->back()
+                ->with('error', 'Gagal menghapus data: ' . $ex->getMessage());
         }
     }
 }

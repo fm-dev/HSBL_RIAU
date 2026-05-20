@@ -11,6 +11,10 @@ class datSeason extends Model
         'name',
         'path_template_izinOrtu',
         'path_template_izin_kepala_sekolah',
+        'regulasi',
+        'syarat_pendaftaran',
+        'roster',
+        'seriesId',
         'createdby',
         'modby'
     ];

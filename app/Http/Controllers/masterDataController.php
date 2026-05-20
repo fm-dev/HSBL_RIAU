@@ -16,6 +16,7 @@ use App\Models\blacklistTeam;
 use App\Models\datPosisi;
 use App\Models\datWilayah;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use PDO;
 
 class masterDataController extends Controller
@@ -66,32 +67,67 @@ class masterDataController extends Controller
     }
     public function FormCreatedSeason()
     {
+        $dataSeries = datSeries::all();
+        $this->atributes['series'] = $dataSeries;
         return view('pages.admin.formCreatedSesion', $this->atributes);
     }
     public function createdSesions(Request $request)
     {
+        DB::beginTransaction();
+
         try {
             $data = $request->validate([
-                'name_sesion' => 'required|string',
-                'path_template_izinOrtu' => 'required|file|mimes:pdf,doc,docx',
-                'path_template_izin_kepala_sekolah' => 'required|file|mimes:pdf,doc,docx',
+                'name_sesion' => 'required|string|max:255',
+
+                'path_template_izinOrtu' => 'required|file|mimes:pdf,doc,docx|max:5120',
+                'path_template_izin_kepala_sekolah' => 'required|file|mimes:pdf,doc,docx|max:5120',
+
+                'regulasi' => 'required|file|mimes:pdf|max:5120',
+                'syarat_pendaftaran' => 'required|file|mimes:pdf|max:5120',
+                'roster' => 'required|file|mimes:pdf|max:5120',
+
+                'seriesId' => 'required|integer|exists:dat_series,id',
             ]);
 
-            // Simpan file ke storage/public/sessions
-            $fileOrtuPath = $request->file('path_template_izinOrtu')->store('sessions', 'public');
-            $fileKepalaPath = $request->file('path_template_izin_kepala_sekolah')->store('sessions', 'public');
+            $fileOrtuPath = $request->file('path_template_izinOrtu')
+                ->store('sessions', 'public');
+
+            $fileKepalaPath = $request->file('path_template_izin_kepala_sekolah')
+                ->store('sessions', 'public');
+
+            $fileRegulasiPath = $request->file('regulasi')
+                ->store('sessions', 'public');
+
+            $fileSyaratPendaftaranPath = $request->file('syarat_pendaftaran')
+                ->store('sessions', 'public');
+
+            $fileRosterPath = $request->file('roster')
+                ->store('sessions', 'public');
 
             datSeason::create([
                 'name' => $data['name_sesion'],
                 'path_template_izinOrtu' => $fileOrtuPath,
                 'path_template_izin_kepala_sekolah' => $fileKepalaPath,
+
+                'regulasi' => $fileRegulasiPath,
+                'syarat_pendaftaran' => $fileSyaratPendaftaranPath,
+                'roster' => $fileRosterPath,
+
+                'seriesId' => $data['seriesId'],
                 'createdby' => Auth::id(),
                 'modby' => Auth::id(),
             ]);
 
-            return redirect('admin/session')->with('success', 'Season berhasil dibuat.');
+            DB::commit();
+
+            return redirect('admin/session')
+                ->with('success', 'Season berhasil dibuat.');
         } catch (\Exception $ex) {
-            return redirect('admin/session')->with('error', 'Gagal membuat season: ' . $ex->getMessage());
+            DB::rollBack();
+
+            return redirect('admin/session')
+                ->withInput()
+                ->with('error', 'Gagal membuat season: ' . $ex->getMessage());
         }
     }
     public function sessionIndex()
@@ -224,6 +260,152 @@ class masterDataController extends Controller
 
         $this->atributes['listKompetisiEvents'] = $data;
         return view('pages.admin.users.formUsers', $this->atributes);
+    }
+    public function viewEditUsers($id)
+    {
+        $user = Auth::user();
+
+        $dataWilaya = datWilayah::find($user->wilayah);
+
+        $dataPeserta = datuser::findOrFail($id);
+
+        // Ambil kompetisi_event_id yang tersimpan, contoh: "1,4,5"
+        $selectedKompetisiIds = collect(explode(',', $dataPeserta->kompetisi_event_id ?? ''))
+            ->map(function ($id) {
+                return trim($id);
+            })
+            ->filter()
+            ->values()
+            ->toArray();
+
+        $query = datKompetisiEvent::query()
+            ->join('dat_sekolahs', 'dat_kompetisi_events.idSekolah', '=', 'dat_sekolahs.id')
+            ->join('datkompetisis as kompetisi', 'dat_kompetisi_events.idKompetisi', '=', 'kompetisi.id')
+            ->join('dat_series', 'dat_kompetisi_events.idSeries', '=', 'dat_series.id')
+            ->join('dat_seasons', 'kompetisi.seasonId', '=', 'dat_seasons.id')
+            ->select(
+                'dat_kompetisi_events.*',
+                'dat_sekolahs.namaSekolah',
+                'kompetisi.name as kompetisiName',
+                'dat_seasons.name as seasonName',
+                'dat_series.name as seriesName'
+            );
+
+        // Filter khusus jika user role 2
+        if ($user->role == 2 && $dataWilaya) {
+            $query->where('dat_series.name', $dataWilaya->namaWilayah);
+        }
+
+        $data = $query->get();
+
+        $this->atributes['dataPeserta'] = $dataPeserta;
+        $this->atributes['listKompetisiEvents'] = $data;
+        $this->atributes['selectedKompetisiIds'] = $selectedKompetisiIds;
+
+        return view('pages.admin.users.formUserEdit', $this->atributes);
+    }
+    public function updateUsers(Request $request, $id)
+    {
+
+
+        DB::beginTransaction();
+
+        try {
+            $request->validate([
+                'username' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'phone' => 'nullable|string|max:20',
+                'password' => 'nullable|string|min:6',
+                'role' => 'nullable',
+                'status' => 'nullable',
+                'alamat' => 'nullable|string',
+                'wilayah' => 'nullable',
+                // 'asal_sekolah' => 'nullable|string|max:255',
+                'kompetisi_event_id' => 'nullable|array',
+            ]);
+            $authUser = Auth::user();
+
+            $dataUser = datuser::findOrFail($id);
+
+            $dataUser->username = $request->username;
+            $dataUser->email = $request->email;
+            $dataUser->phone = $request->phone;
+            $dataUser->role = $request->input('role', $dataUser->role);
+            $dataUser->status = $request->input('status', $dataUser->status);
+            $dataUser->alamat = $request->input('alamat', $dataUser->alamat);
+            $dataUser->wilayah = $request->input('wilayah', $dataUser->wilayah);
+            // $dataUser->asal_sekolah = $request->input('asal_sekolah', $dataUser->asal_sekolah);
+
+            // Password hanya diubah kalau diisi
+            if ($request->filled('password')) {
+                $dataUser->password = Hash::make($request->password);
+            }
+
+            // Simpan checkbox kompetisi_event_id[] menjadi format: 1,4,5
+            if ($request->has('kompetisi_event_id')) {
+                $kompetisiEventIds = collect($request->kompetisi_event_id)
+                    ->filter()
+                    ->map(function ($id) {
+                        return trim($id);
+                    })
+                    ->unique()
+                    ->values()
+                    ->toArray();
+
+                $dataUser->kompetisi_event_id = implode(',', $kompetisiEventIds);
+            } else {
+                $dataUser->kompetisi_event_id = null;
+            }
+
+            // User yang mengubah data
+            $dataUser->modby = $authUser->id;
+
+            $dataUser->save();
+
+            DB::commit();
+
+            return redirect()
+                ->back()
+                ->with('success', 'Data user berhasil diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Data user gagal diperbarui. ' . $e->getMessage());
+        }
+    }
+    public function deleteUsers($id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $authUser = Auth::user();
+
+            $dataUser = datuser::findOrFail($id);
+
+            // Opsional: mencegah user menghapus akun sendiri
+            if ($authUser->id == $dataUser->id) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Anda tidak dapat menghapus akun yang sedang digunakan.');
+            }
+
+            $dataUser->delete();
+
+            DB::commit();
+
+            return redirect()
+                ->back()
+                ->with('success', 'Data user berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()
+                ->back()
+                ->with('error', 'Data user gagal dihapus. ' . $e->getMessage());
+        }
     }
     public function StoreUsers(Request $req)
     {
@@ -417,7 +599,7 @@ class masterDataController extends Controller
             $data->where('dat_series.name', $dataWilaya->namaWilayah);
         }
         $data = $data->get();
-            
+
 
         $this->atributes['listKompetisiEvents'] = $data;
         $this->atributes['statusVerifikasi'] = false;
@@ -553,7 +735,7 @@ class masterDataController extends Controller
             $data->where('dat_series.name', $dataWilaya->namaWilayah);
         }
         $data = $data->get();
-        
+
         $this->atributes['listKompetisiEvents'] = $data;
         $this->atributes['statusVerifikasi'] = true;
         return view('pages.admin.kompetisiTournament.list', $this->atributes);

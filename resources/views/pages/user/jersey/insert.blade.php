@@ -15,7 +15,7 @@
         </div>
         <div class="row m-2">
             <div class="card m-2 p-2">
-                <form action="/admin/eventsScore/store" method="POST" enctype="multipart/form-data">
+                <form action="/jersey/store" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <input type="hidden" name="events_id" value="{{ $idEvents ?? '' }}">

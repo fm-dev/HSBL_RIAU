@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="blue-theme">
+<html lang="en" data-bs-theme="SemiDarkTheme">
 
 <head>
   <meta charset="utf-8">
@@ -8,8 +8,8 @@
   <!--favicon-->
   <link rel="icon" href="{{ asset('adminSide/assets/images/favicon-32x32.png') }}" type="image/png">
   <!-- loader-->
-	<link href="{{ asset('adminSide/assets/css/pace.min.css') }}" rel="stylesheet">
-	<script src="{{ asset('adminSide/assets/js/pace.min.js') }}"></script>
+  <link href="{{ asset('adminSide/assets/css/pace.min.css') }}" rel="stylesheet">
+  <script src="{{ asset('adminSide/assets/js/pace.min.js') }}"></script>
 
   <!--plugins-->
   <link href="{{ asset('adminSide/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
@@ -23,7 +23,7 @@
   <link href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" rel="stylesheet">
   <!--main css-->
   <link href="{{ asset('adminSide/assets/css/bootstrap-extended.css') }}" rel="stylesheet">
-<link href="{{ asset('adminSide/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('adminSide/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('adminSide/sass/main.css') }}" rel="stylesheet">
   <link href="{{ asset('adminSide/sass/dark-theme.css') }}" rel="stylesheet">
   <link href="{{ asset('adminSide/sass/blue-theme.css') }}" rel="stylesheet">
@@ -32,17 +32,18 @@
   <link href="{{ asset('adminSide/sass/responsive.css') }}" rel="stylesheet">
 
 </head>
+
 <body>
 
-    @include('layouts.admin.header')
-    @include('layouts.admin.sidebar')
-    @yield('content')
-    <!-- @include('layouts.admin.footer') -->
+  @include('layouts.admin.header')
+  @include('layouts.admin.sidebar')
+  @yield('content')
+  <!-- @include('layouts.admin.footer') -->
   <!--start switcher-->
   <button class="btn btn-grd btn-grd-primary position-fixed bottom-0 end-0 m-3 d-flex align-items-center gap-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop">
     <i class="material-icons-outlined">tune</i>Customize
   </button>
-  
+
   <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="staticBackdrop">
     <div class="offcanvas-header border-bottom h-70">
       <div class="">
@@ -59,7 +60,7 @@
 
         <div class="row g-3">
           <div class="col-12 col-xl-6">
-            <input type="radio" class="btn-check" name="theme-options" id="BlueTheme" checked>
+            <input type="radio" class="btn-check" name="theme-options" id="BlueTheme">
             <label class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4" for="BlueTheme">
               <span class="material-icons-outlined">contactless</span>
               <span>Blue</span>
@@ -80,7 +81,7 @@
             </label>
           </div>
           <div class="col-12 col-xl-6">
-            <input type="radio" class="btn-check" name="theme-options" id="SemiDarkTheme">
+            <input type="radio" class="btn-check" name="theme-options" id="SemiDarkTheme" checked>
             <label class="btn btn-outline-secondary d-flex flex-column gap-1 align-items-center justify-content-center p-4" for="SemiDarkTheme">
               <span class="material-icons-outlined">contrast</span>
               <span>Semi Dark</span>
@@ -119,12 +120,12 @@
   <script src="{{ asset('adminSide/assets/js/main.js') }}"></script>
   <script src="{{ asset('adminSide/assets/js/dashboard1.js') }}"></script>
   <script>
-	   new PerfectScrollbar(".user-list")
+    new PerfectScrollbar(".user-list")
   </script>
   <script>
-		$(document).ready(function() {
-			$('#dataadmin').DataTable();
-		  } );
+    $(document).ready(function() {
+      $('#dataadmin').DataTable();
+    });
   </script>
 
   <!-- SweetAlert2 -->

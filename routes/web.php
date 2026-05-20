@@ -105,8 +105,10 @@ Route::prefix('/admin')->name('admin.')->middleware('admin.role')->group(functio
     //session managed user
     Route::get('/masterUser/list', [masterDataController::class, 'listMasterUser'])->name('manage_master_user.list');
     Route::get('/masterUser/form', [masterDataController::class, 'viewAddUsers'])->name('manage_master_user.form');
+    Route::get('/masterUser/edit/{id}', [masterDataController::class, 'viewEditUsers'])->name('manage_master_user.edit');
+    Route::post('/masterUser/update/{id}', [masterDataController::class, 'updateUsers'])->name('manage_master_user.update');
     Route::post('/masterUser/create', [masterDataController::class, 'createdMasterUser'])->name('manage_master_user.create');
-    Route::get('/masterUser/delete/{id}', [masterDataController::class, 'deleteMasterUser'])->name('manage_master_user.delete');
+    Route::get('/masterUser/delete/{id}', [masterDataController::class, 'deleteUsers'])->name('manage_master_user.delete');
     // series management
     Route::get('series', [masterDataController::class, 'seriesIndex'])->name('manage_series');
     Route::get('series/create', [masterDataController::class, 'FormCreatedSeries'])->name('manage_series.create');
@@ -140,8 +142,11 @@ Route::prefix('/admin')->name('admin.')->middleware('admin.role')->group(functio
     Route::get('/positions/delete', [masterDataController::class, 'deletePositions'])->name('manage_position.delete');
     Route::get('/positions/form', [masterDataController::class, 'formPositions'])->name('manage_position.form');
     Route::get('/eventsScore', [managedEventsScore::class, 'dashboard'])->name('eventsScore.dashboard');
-    
+
     Route::get('/eventsScore', [managedEventsScore::class, 'dashboard'])->name('eventsScore.dashboard');
     Route::get('/eventsScore/form', [managedEventsScore::class, 'form'])->name('eventsScore.form');
     Route::post('/eventsScore/create', [managedEventsScore::class, 'store'])->name('eventsScore.store');
+    Route::get('/eventsScore/edit/{id}', [managedEventsScore::class, 'edit'])->name('eventsScore.update');
+    Route::post('/eventsScore/update/{id}', [managedEventsScore::class, 'update'])->name('eventsScore.update');
+    Route::delete('/eventsScore/delete/{id}', [managedEventsScore::class, 'destroy'])->name('admin.eventsScore.destroy');
 });

@@ -59,20 +59,65 @@ class adminController extends Controller
     }
     public function index()
     {
-        return view('pages.admin.index',$this->atributes);
+        $user = Auth::user();
+
+        $dataUser = datuser::find($user->id);
+
+        $adminFields = [
+            'username' => 'Username',
+            'email' => 'Email',
+            'phone' => 'No. Telepon',
+            'role' => 'Role',
+            'status' => 'Status',
+            'alamat' => 'Alamat',
+            'wilayah' => 'Wilayah',
+            'asal_sekolah' => 'Asal Sekolah',
+            'kompetisi_event_id' => 'Kompetisi / Event',
+            'createdby' => 'Dibuat Oleh',
+            'modby' => 'Diubah Oleh',
+        ];
+
+        $profileItems = collect($adminFields)->map(function ($label, $field) use ($dataUser) {
+            $value = $dataUser->{$field} ?? null;
+
+            return [
+                'field' => $field,
+                'label' => $label,
+                'value' => filled($value) ? $value : '-',
+                'is_complete' => filled($value),
+            ];
+        })->values();
+
+        $totalFields = $profileItems->count();
+        $completed = $profileItems->where('is_complete', true)->count();
+        $percentage = $totalFields > 0 ? round(($completed / $totalFields) * 100) : 0;
+
+        $emptyFields = $profileItems
+            ->where('is_complete', false)
+            ->pluck('label')
+            ->values();
+
+        $this->atributes['user'] = $dataUser;
+        $this->atributes['profileItems'] = $profileItems;
+        $this->atributes['totalFields'] = $totalFields;
+        $this->atributes['completed'] = $completed;
+        $this->atributes['percentage'] = $percentage;
+        $this->atributes['emptyFields'] = $emptyFields;
+
+        return view('pages.admin.index', $this->atributes);
     }
     public function detailProfile()
     {
-        return view('pages.admin.profile.profile',$this->atributes);
+        return view('pages.admin.profile.profile', $this->atributes);
     }
     public function dataAdminView()
     {
-        return view('pages.admin.profile.dataAdmin',$this->atributes);
+        return view('pages.admin.profile.dataAdmin', $this->atributes);
     }
     public function dataUserView()
     {
         $this->ListDataFilter();
-        return view('pages.admin.profile.dataUser',$this->atributes);
+        return view('pages.admin.profile.dataUser', $this->atributes);
     }
     public function dataListTeam()
     {
@@ -103,7 +148,7 @@ class adminController extends Controller
         // Get all users with role 1 or 2 (Super Admin atau Admin)
         $admins = datuser::whereIn('role', [1, 2])->get();
         $this->atributes['admins'] = $admins;
-        
+
         return view("pages.admin.manageAdmin", $this->atributes);
     }
     public function formCreateAdmin()
@@ -147,7 +192,7 @@ class adminController extends Controller
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            
+
             return redirect()->route('portal.admin.login')->with('success', 'Anda berhasil logout');
         } catch (\Exception $e) {
             return redirect()->route('portal.admin.login')->with('error', 'Terjadi kesalahan saat logout: ' . $e->getMessage());
@@ -614,11 +659,11 @@ class adminController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus wilayah: ' . $e->getMessage());
         }
     }
-    public function ListDataFilter(){
+    public function ListDataFilter()
+    {
         $data = datSeason::all();
         $this->atributes['listSession'] = $data;
         $dataKompetisi = datkompetisi::all();
         $this->atributes['listKompetisi'] = $dataKompetisi;
     }
-    
 }

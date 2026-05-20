@@ -66,18 +66,18 @@
 								</svg>
 							</div>
                         </div>
-                        <div class="form-group text-left">
+                        <div class="form-group text-left " style="margin-bottom: 10px;">
                             <button type='submit' class="site-button m-r5 login-switch">login</button>
-                            <div class="m-t20 d-flex justify-content-between">
+                            <!-- <div class="m-t20 d-flex justify-content-between">
 								<div class="m-b0">
 									<a href="/registrasi" class="btn btn-outline-warning"><i class="fa fa-sign-in"></i> Daftar Akun</a>
 								</div>
 								<a data-bs-toggle="tab" href="#forgot-password" class="m-l10"><i class="fa fa-unlock-alt"></i> Forgot Password</a>
-							</div>
+							</div> -->
 						</div>
                     </form>
                     <div class="bg-primary p-a15 "> 
-                        <a data-bs-toggle="tab" href="" class="text-white"><i class="fa fa-google"></i> Login with google</a> 
+                        <a data-bs-toggle="tab" href="" class="text-white"> </a> 
                     </div>
                 </div>
                 <div id="forgot-password" class="tab-pane fade ">

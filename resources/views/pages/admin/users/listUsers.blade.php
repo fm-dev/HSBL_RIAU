@@ -88,10 +88,10 @@
                                                 <button class="btn btn-sm btn-secondary" title="Detail">
                                                     Detail
                                                 </button>
-                                                <button class="btn btn-sm btn-primary" title="Edit">
+                                                <a href="/admin/masterUser/edit/{{ $user->user_id }}" class="btn btn-sm btn-primary" title="Edit">
                                                     Edit
-                                                </button>
-                                                <a href="/admin/masterUser/delete/{{ $user->id }}" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this user?')">
+                                                </a>
+                                                <a href="/admin/masterUser/delete/{{ $user->user_id }}" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this user?')">
                                                     Delete
                                                 </a>
                                             </td>
